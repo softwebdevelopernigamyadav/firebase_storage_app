@@ -27,7 +27,8 @@ class _HomePageState extends State<HomePage> {
                     UserModel.fromJson(snapshot.data.documents[index].data);
                 //print(DateTime.parse(data.dob));
                 final differenceInDays = DateTime.now().difference(DateTime(1997, 01, 13)).inDays;
-                print(DateTime.now().year-DateTime(1997, 01, 13).year);
+                final age = DateTime.now().year-DateTime(1997, 01, 13).year;
+                //print(age);
                 return ListTile(
                   leading: data.image != null
                       ? ClipRRect(
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                   title: Text(data.username),
                   subtitle: Text(data.email),
+                  trailing: Text(age.toString()),
                 );
               },
               itemCount: snapshot.data.documents.length,
