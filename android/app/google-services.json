@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "38586845998",
+    "project_id": "fir-276aa",
+    "storage_bucket": "fir-276aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38586845998:android:320faf624af215b14108bf",
+        "android_client_info": {
+          "package_name": "com.krishnasoft.firebase_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "38586845998-6khpnrq6ajgpq8tpqlntbo8a71mh831s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXIPwy9hLAlnbp7h1ZwdtmsmvgsYlhjpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "38586845998-6khpnrq6ajgpq8tpqlntbo8a71mh831s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
