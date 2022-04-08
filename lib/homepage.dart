@@ -25,28 +25,52 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index) {
                 final data =
                     UserModel.fromJson(snapshot.data.documents[index].data);
-                //print(DateTime.parse(data.dob));
-                final differenceInDays = DateTime.now().difference(DateTime(1997, 01, 13)).inDays;
-                final age = DateTime.now().year-DateTime(1997, 01, 13).year;
-                //print(age);
-                return ListTile(
-                  leading: data.image != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(40),
-                          child: Image.memory(
-                            base64.decode(data.image),
-                            width: 40,
-                            height: 40,
-                            fit: BoxFit.cover,
+                final now = DateTime.now();
+                final dob = DateTime.tryParse(data.dob) ?? now;
+                final age = DateTime.now().year - dob.year;
+                final thisYearsDOB = DateTime(now.year, dob.month, dob.day);
+                final nextYearsDOB = DateTime(now.year + 1, dob.month, dob.day);
+                return InkWell(
+                  onTap: () {
+                    if (thisYearsDOB.isAfter(now)) {
+                      print("${thisYearsDOB.difference(now).inDays} days left");
+                    } else {
+                      print("${nextYearsDOB.difference(now).inDays} days left");
+                    }
+                    // print(thisYearsDOB);
+                    // print(nextYearsDOB);
+                    // if (now.isBefore(thisYearsDOB)) {
+                    //   print(thisYearsDOB.difference(now).inDays);
+                    // } else {
+                    //   print(nextYearsDOB.difference(now).inDays);
+                    // }
+                  },
+                  child: ListTile(
+                    leading: data.image != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(40),
+                            child: Image.memory(
+                              base64.decode(data.image),
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : CircleAvatar(
+                            backgroundColor: Colors.black,
+                            child: Text(data.username[0].toUpperCase()),
                           ),
-                        )
-                      : CircleAvatar(
-                          backgroundColor: Colors.black,
-                          child: Text(data.username[0].toUpperCase()),
-                        ),
-                  title: Text(data.username),
-                  subtitle: Text(data.email),
-                  trailing: Text(age.toString()),
+                    title: Text(data.username),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(data.email),
+                        Text(data.dob),
+                      ],
+                    ),
+                    isThreeLine: true,
+                    trailing: Text(age.toString()),
+                  ),
                 );
               },
               itemCount: snapshot.data.documents.length,
