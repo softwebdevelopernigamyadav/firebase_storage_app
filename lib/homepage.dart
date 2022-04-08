@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_cloud_store/account_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,6 +38,8 @@ class _HomePageState extends State<HomePage> {
                     } else {
                       print("${nextYearsDOB.difference(now).inDays} days left");
                     }
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>  AccountPage(user: data,index: index,)));
                     // print(thisYearsDOB);
                     // print(nextYearsDOB);
                     // if (now.isBefore(thisYearsDOB)) {
