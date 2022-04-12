@@ -39,7 +39,10 @@ class _HomePageState extends State<HomePage> {
                       print("${nextYearsDOB.difference(now).inDays} days left");
                     }
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>  AccountPage(user: data,index: index,)));
+                        builder: (context) => AccountPage(
+                              user: data,
+                              index: index,
+                            )));
                     // print(thisYearsDOB);
                     // print(nextYearsDOB);
                     // if (now.isBefore(thisYearsDOB)) {
@@ -128,4 +131,24 @@ class UserModel {
       "Image": image,
     };
   }
+
+   UserModel copyWith(
+      {String username,
+      String email,
+      String mobile,
+      String address,
+      String dob,
+      String image,
+      String password}) {
+    return UserModel(
+      username: username ?? this.username,
+      mobile: mobile ?? this.mobile,
+      address: address ?? this.address,
+      password: password ?? this.password,
+      email: email ?? this.email,
+      dob: dob ?? this.dob,
+      image: image ?? this.image,
+    );
+  }
+  static String name() {}
 }

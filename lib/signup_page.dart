@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key key}) : super(key: key);
+  const SignUpPage({Key key, @required this.user, @required this.index})
+      : super(key: key);
+  final UserModel user;
+  final int index;
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -16,16 +19,15 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   File _file;
-  File _image;
-  String _uploadedFileURL;
 
-  final TextEditingController _username = TextEditingController();
-  final TextEditingController _mobile = TextEditingController();
-  final TextEditingController _address = TextEditingController();
-  final TextEditingController _password = TextEditingController();
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _dob = TextEditingController();
+  TextEditingController _username;
+  TextEditingController _mobile;
+  TextEditingController _address;
+  TextEditingController _password;
+  TextEditingController _email;
+  TextEditingController _dob;
 
+  //add data  into  firebase
   void _addData() async {
     //StorageReference reference = _storage.ref().child("assets/images/");
     //StorageUploadTask uploadTask = reference.putFile(_file);
@@ -46,6 +48,35 @@ class _SignUpPageState extends State<SignUpPage> {
     await collectionReference.add(user.toJson());
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => const HomePage()));
+  }
+
+  //update value in firebase
+  _updateData() async {
+    print(widget.user.toJson());
+    final user = widget.user.copyWith(
+        // email: _email.text,
+        // username: _username.text,
+        mobile: _mobile.text,
+        dob: _dob.text,
+        address: _address.text,
+        password: _password.text);
+    print(user.toJson());
+    /*CollectionReference collectionReference =
+    Firestore.instance.collection('data_store');
+    QuerySnapshot querySnapshot = await collectionReference.getDocuments();
+    querySnapshot.documents[widget.index].reference.updateData(
+        user.toJson());*/
+  }
+
+  @override
+  void initState() {
+    _username = TextEditingController(text: widget.user?.username);
+    _mobile = TextEditingController(text: widget.user?.mobile);
+    _address = TextEditingController(text: widget.user?.address);
+    _password = TextEditingController(text: widget.user?.password);
+    _email = TextEditingController(text: widget.user?.email);
+    _dob = TextEditingController(text: widget.user?.dob);
+    super.initState();
   }
 
 //upload image in firebase
@@ -150,8 +181,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   hintText: 'DOB',
                 ),
               ),
-              TextButton(onPressed: _addData, child: const Text("Submit")),
-              //TextButton(onPressed: () {}, child: const Text("FetchData")),
+              if (widget.user != null && widget.index != null)
+                TextButton(onPressed: _updateData, child: const Text("Update"))
+              else
+                TextButton(onPressed: _addData, child: const Text("Submit"))
             ],
           ),
         ),
