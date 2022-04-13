@@ -150,5 +150,4 @@ class UserModel {
       image: image ?? this.image,
     );
   }
-  static String name() {}
 }
